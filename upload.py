@@ -1,35 +1,41 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Fri Jan 12 12:16:31 2018
+Created on Mon Jan 15 16:37:20 2018
 
 @author: earthz
 """
 
-from flask import Flask, render_template, request
-from flask_uploads import UploadSet, configure_uploads, IMAGES
+import os
+from flask import Flask, request, redirect, url_for, render_template
+from werkzeug.utils import secure_filename
 
-filename=""
+UPLOAD_FOLDER = 'img'
+ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
+
 app = Flask(__name__)
-
-photos = UploadSet('photos', IMAGES)
-
-app.config['UPLOADED_PHOTOS_DEST'] = 'img'
-configure_uploads(app, photos)
-
-@app.route('/upload', methods=['GET', 'POST'])
-def upload():
-    if request.method == 'POST' and 'photo' in request.files:
-        filename = photos.save(request.files['photo'])
-        return (filename)
-        
-
-
-#    return render_template('index.html')
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+           
+@app.route('/', methods=['GET', 'POST'])
+def upload_file():
+    if request.method == 'POST':
+        # check if the post request has the file part
+#        if 'file' not in request.files:
+#            flash('No file part')
+#            return redirect(request.url)
+        file = request.files['file']
+        # if user does not select file, browser also
+        # submit a empty part without filename
+#        if file.filename == '':
+#            flash('No selected file')
+#            return redirect(request.url)
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
     return render_template('index.html')
-#    return render_template('index.html')
-
-app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 if __name__ == '__main__':
-    app.run(debug=True,port=5000)
-#	app.run(debug=True)
+    app.run(debug=True)
+    app.run(port='5000')
