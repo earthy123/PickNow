@@ -1,9 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Created on Mon Jan 15 16:37:20 2018
-@author: earthz
-"""
+
 import requests
 import os
 from flask import Flask, request, redirect, url_for, render_template
@@ -14,6 +11,8 @@ ALLOWED_EXTENSIONS = set([ 'png', 'jpg', 'jpeg'])
 url = 'https://pic.azurewebsites.net/'
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -32,6 +31,8 @@ def upload_file():
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             api(filename)
     return render_template('index.html')
+
+
 if __name__ == '__main__':
-#    app.run(debug=True)
+    app.run(debug=True)
     app.run()
