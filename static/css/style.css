@@ -102,6 +102,8 @@ body {
   max-width: 200px;
   margin: auto;
   padding: 20px;
+  -webkit-transform: rotate(90deg);
+  transform: rotate(90deg);
 }
 
 .remove-image {
