@@ -2,15 +2,15 @@
 # -*- coding: utf-8 -*-
 """
 Created on Mon Jan 15 16:37:20 2018
-
 @author: earthz
 """
 
 import os
 from flask import Flask, request, redirect, url_for, render_template, send_from_directory,send_file
 from werkzeug.utils import secure_filename
+import requests
 
-url = 'http://13.92.130.243:5000'
+url = 'http://52.168.49.231:5000/'
 UPLOAD_FOLDER = 'img'
 CUTBG_FOLDER ='cbg'
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
@@ -53,6 +53,7 @@ def send_image(filename):
 
 # @app.route('')
 
-if __name__ == '__main__':
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))
     app.run(debug=True)
-    app.run(port='5000')
+    app.run(host='0.0.0.0', port=port)
