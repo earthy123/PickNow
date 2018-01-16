@@ -42,12 +42,13 @@ def upload_file():
 @app.route('/finish')
 def send_image(filename):
         if request.method == 'POST':
-        file = request.files['file']
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-#            print(filename, file=sys.stderr)
-            file.save(os.path.join(app.config['CUTBG_FOLDER'], filename))
-    return send_from_directory("cbg",filename)
+            
+            file = request.files['file']
+            if file and allowed_file(file.filename):
+                filename = secure_filename(file.filename)
+    #            print(filename, file=sys.stderr)
+                file.save(os.path.join(app.config['CUTBG_FOLDER'], filename))
+        return send_from_directory("cbg",filename)
 
 # @app.route('')
 
