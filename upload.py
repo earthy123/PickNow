@@ -2,56 +2,38 @@
 # -*- coding: utf-8 -*-
 """
 Created on Mon Jan 15 16:37:20 2018
+ 
 @author: earthz
 """
-
-import os
-from flask import Flask, request, redirect, url_for, render_template, send_from_directory,send_file
-from werkzeug.utils import secure_filename
 import requests
-
-url = 'http://52.168.49.231:5000/'
+import os
+from flask import Flask, request, redirect, url_for, render_template
+from werkzeug.utils import secure_filename
+import sys
 UPLOAD_FOLDER = 'img'
-CUTBG_FOLDER ='cbg'
-ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
-
+ALLOWED_EXTENSIONS = set([ 'png', 'jpg', 'jpeg'])
+url = 'http://52.168.49.231:5000/'
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-
-@app.route("/")
-def index():
-    return render_template("index.html")
-
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
+ 
 def api(filename):
     files = {'file': open(filename, 'rb')}
     requests.post(url, files=files)
-
-@app.route('/upload', methods=['POST'])
+           
+@app.route('/', methods=['GET', 'POST'])
 def upload_file():
     if request.method == 'POST':
         file = request.files['file']
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
+#            print(filename, file=sys.stderr)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             api(filename)
-    return render_template('index2.html', image_name=filename)
+    return render_template('index.html')
 
-@app.route('/finish')
-def send_image(filename):
-        if request.method == 'POST':
-            
-            file = request.files['file']
-            if file and allowed_file(file.filename):
-                filename = secure_filename(file.filename)
-    #            print(filename, file=sys.stderr)
-                file.save(os.path.join(app.config['CUTBG_FOLDER'], filename))
-        return send_file('./cgb/'+filename)
-
-# @app.route('')
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
