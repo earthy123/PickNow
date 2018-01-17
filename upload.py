@@ -29,7 +29,7 @@ def upload_file():
             filename = secure_filename(file.filename)
 #            print(filename, file=sys.stderr)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            api(filename)
+#            api(filename)
 
     return render_template('index.html')
 if __name__ == '__main__':
