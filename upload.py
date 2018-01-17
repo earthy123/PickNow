@@ -4,12 +4,17 @@
 
 import os
 from flask import Flask, request, redirect, url_for, render_template
-#import requests
+import requests
 from werkzeug.utils import secure_filename
+
 
 
 url = 'http://52.168.73.191:5000/'
 
+def api(filename):
+    files = {'file': open(UPLOAD_FOLDER+filename, 'rb')}
+    requests.post(url, files=files)
+    
 UPLOAD_FOLDER = './img/'
 BG_FOLDER = './bgimg/'
 app = Flask(__name__)
