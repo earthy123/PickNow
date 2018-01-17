@@ -33,7 +33,7 @@ def upload_file():
                 filename = secure_filename(file.filename)
     #            print(filename, file=sys.stderr)
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-#                api(filename)
+                api(filename)
 #                print("send img", file=sys.stderr)
             
     elif request.method == 'POST' and 'file_bg' in request.files:
