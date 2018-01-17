@@ -51,7 +51,7 @@ def upload_file():
                 file.save(os.path.join(app.config['BG_FOLDER'], filename))
     
 
-    return render_template('index2.html')
+    return render_template('index2.html',image_name=filename)
 
 @app.route('/upload/<filename>')
 def send_image(filename):
