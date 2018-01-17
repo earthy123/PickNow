@@ -4,9 +4,9 @@
 
 import os
 from flask import Flask, request, redirect, url_for, render_template
-import requests
-from werkzeug.utils import secure_filename
 
+from werkzeug.utils import secure_filename
+import requests
 
 
 url = 'http://52.168.73.191:5000/'
