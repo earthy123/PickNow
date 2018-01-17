@@ -30,7 +30,7 @@ def upload_file():
 #            print(filename, file=sys.stderr)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             api(filename)
-            print("send img", file=sys.stderr)
+
     return render_template('index.html')
 if __name__ == '__main__':
     app.run(debug=True)
