@@ -32,7 +32,7 @@ def upload_file():
     #            print(filename, file=sys.stderr)
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
                 api(filename)
-                print("send img", file=sys.stderr)
+#                print("send img", file=sys.stderr)
             
     elif request.method == 'POST' and 'file_bg' in request.files:
             file=request.files['file_bg']
@@ -41,7 +41,7 @@ def upload_file():
     #            print(filename, file=sys.stderr)
                 file.save(os.path.join(app.config['BG_FOLDER'], filename))
 
-                print("send img_bg", file=sys.stderr)
+#                print("send img_bg", file=sys.stderr)
     return render_template('index.html')
 if __name__ == '__main__':
     app.run(debug=True)
