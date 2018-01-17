@@ -11,6 +11,7 @@ import sys
 url = 'https://pic.azurewebsites.net/'
 UPLOAD_FOLDER = 'img'
 app = Flask(__name__)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 ALLOWED_EXTENSIONS = set([ 'png', 'jpg', 'jpeg'])
 def allowed_file(filename):
     return '.' in filename and \
@@ -19,6 +20,7 @@ def allowed_file(filename):
 def api(filename):
     files = {'file': open(filename, 'rb')}
     requests.post(url, files=files)
+    
 @app.route('/', methods=['GET', 'POST'])
 def upload_file():
     if request.method == 'POST':
