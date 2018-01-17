@@ -8,7 +8,7 @@ from flask_uploads import UploadSet, configure_uploads, IMAGES
 from werkzeug.utils import secure_filename
 import sys
 
-url = 'https://pic.azurewebsites.net/'
+url = 'http://52.168.73.191:5000/'
 UPLOAD_FOLDER = 'img'
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -29,6 +29,8 @@ def upload_file():
             filename = secure_filename(file.filename)
 #            print(filename, file=sys.stderr)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            api(filename)
+            print("send img", file=sys.stderr)
     return render_template('index.html')
 if __name__ == '__main__':
     app.run(debug=True)
