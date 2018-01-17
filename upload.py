@@ -1,14 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Created on Mon Jan 15 16:37:20 2018
 
-@author: earthz
-"""
+from flask import Flask
+app = Flask(__name__)
 
-import os
-from flask import Flask, request, redirect, url_for, render_template
-from werkzeug.utils import secure_filename
+@app.route('/')
+def hello_world():
+  return 'Hey its Python Flask application!'
 
 app = Flask(__name__)
 
