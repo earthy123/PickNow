@@ -9,6 +9,7 @@ from werkzeug.utils import secure_filename
 
 
 url = 'http://52.168.73.191:5000/'
+
 UPLOAD_FOLDER = './img/'
 BG_FOLDER = './bgimg/'
 app = Flask(__name__)
@@ -21,9 +22,9 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
            
-def api(filename):
-    files = {'file': open(UPLOAD_FOLDER+filename, 'rb')}
-    requests.post(url, files=files)
+#def api(filename):
+#    files = {'file': open(UPLOAD_FOLDER+filename, 'rb')}
+#    requests.post(url, files=files)
     
 @app.route('/', methods=['GET', 'POST'])
 def upload_file():
@@ -31,10 +32,10 @@ def upload_file():
             file=request.files['file']
             if file and allowed_file(file.filename):
                 filename = secure_filename(file.filename)
-    #            print(filename, file=sys.stderr)
+
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-                api(filename)
-#                print("send img", file=sys.stderr)
+                files = {'file': open(UPLOAD_FOLDER+filename, 'rb')}
+                requests.post(url, files=files)
             
     elif request.method == 'POST' and 'file_bg' in request.files:
             file=request.files['file_bg']
