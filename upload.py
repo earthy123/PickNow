@@ -1,20 +1,16 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Mon Jan 15 16:37:20 2018
+Created on Fri Jan 12 12:16:31 2018
 
 @author: earthz
 """
 
+from werkzeug.utils import secure_filename
 import os
 from flask import Flask, request, redirect, url_for, render_template, send_from_directory,send_file
-from werkzeug.utils import secure_filename
 
 url = 'http://13.92.130.243:5000'
-UPLOAD_FOLDER = 'img'
-CUTBG_FOLDER ='cbg'
-ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
-
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
@@ -56,3 +52,8 @@ def send_image(filename):
 if __name__ == '__main__':
     app.run(debug=True)
     app.run(port='5000')
+
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
+if __name__ == '__main__':
+    app.run(debug=True,port=5000)
+#	app.run(debug=True)
