@@ -22,9 +22,9 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
            
-def api(filename):
-    files = {'file': open(UPLOAD_FOLDER+filename, 'rb')}
-    requests.post(url, files=files)
+#def api(filename):
+#    files = {'file': open(UPLOAD_FOLDER+filename, 'rb')}
+#    requests.post(url, files=files)
     
 @app.route('/', methods=['GET', 'POST'])
 def upload_file():
