@@ -55,7 +55,7 @@ def upload_file():
 
 @app.route('/upload/<filename>')
 def send_image(filename):
-    return send_from_directory("BG_FOLDER",filename)
+    return send_from_directory(app.config['BG_FOLDER'],filename)
 
 if __name__ == '__main__':
     app.run(debug=True)
