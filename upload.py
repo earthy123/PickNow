@@ -17,10 +17,7 @@ a=UPLOAD_FOLDER+'matthias-clamer.jpeg'
 app = Flask(__name__)
 @app.route('/', methods=['GET', 'POST'])
 def ss():
-    
-     files = {'file': open(a, 'rb')}
-     res = requests.post(url, data=files)
-     print(res, file=sys.stderr)
+    return "Heyyy"
 
 if __name__ == '__main__':
     app.run(debug=True)
