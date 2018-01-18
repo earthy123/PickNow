@@ -33,7 +33,7 @@
 </div> -->
 
 <div class="file-upload">
-  <form method=POST id="uploadform"  enctype=multipart/form-data >
+  <form method=POST enctype=multipart/form-data action="{{ url_for('upload_file') }}">
     <button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger( 'click' )">Add Image</button>
 
     <div class="image-upload-wrap">
@@ -51,7 +51,7 @@
               <button type="button" onclick="removeUpload()" class="remove-image">Remove <span class="image-title">Uploaded Image</span></button>
             </div>
             <div>
-              <button type="submit" id="submit" class="file-upload-btn-upload" value="Upload">Upload </button>
+              <button type="submit" class="file-upload-btn-upload" value="Upload">Upload </button>
             </div>
 
 
@@ -62,8 +62,7 @@
   </form>
 
 </div>
-    <p>Result Filename:&nbsp;<span id="resultFilename"> here</span></p>
-    <p>Result Filesize:&nbsp;<span id="resultFilesize">here</span></p>
+
     <img id="resImg" src="" alt="">
 
 
