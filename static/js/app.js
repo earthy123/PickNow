@@ -22,6 +22,7 @@ $(function() {
               alt: "jQuery Logo"
             });
         }).fail(function(data){
+          console.error('error',data);
             alert('error!');
         });
     });
