@@ -3,7 +3,7 @@
 
 
 import os
-from flask import Flask, request, redirect, url_for, render_template
+from flask import Flask, request, redirect, url_for, render_template,jsonify
 import requests
 from werkzeug.utils import secure_filename
 
@@ -43,9 +43,11 @@ def upload_file():
 
     elif request.method == 'POST' and 'file_bg' in request.files:
             file=request.files['file_bg']
-            if file and allowed_file(file.filename):
+            if file and allowed_file(file.filename):       
                 filename = secure_filename(file.filename)
+                file_size = os.path.getsize(os.path.join(BG_FOLDER, filename))
                 file.save(os.path.join(app.config['BG_FOLDER'], filename))
+                return jsonify(name=filename, size=file_size)
 
     return render_template('index.html')
 if __name__ == '__main__':
