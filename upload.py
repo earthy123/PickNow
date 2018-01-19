@@ -47,9 +47,8 @@ def upload_file():
             file=request.files['file_bg']
             if file and allowed_file(file.filename):       
                 filename = secure_filename(file.filename)
-                file_size = os.path.getsize(os.path.join(BG_FOLDER, filename))
                 file.save(os.path.join(app.config['BG_FOLDER'], filename))
-                return jsonify(name=filename, size=file_size)
+
 
     return render_template('index.html')
 if __name__ == '__main__':
