@@ -53,8 +53,11 @@ def upload_file():
 
 @app.route('/upload/<filename>')
 def receive_image(filename):
+    original_img=filename
+    name = original_img.rsplit('.', 1)[0]
+    imageBg =name+'.png'
             # api(filename)
-    return send_from_directory("bgimg",filename)
+    return send_from_directory("bgimg",imageBg)
 
 # @app.route('')
 
