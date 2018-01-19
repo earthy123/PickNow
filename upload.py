@@ -10,8 +10,8 @@ import os
 from flask import Flask, request, redirect, url_for, render_template, send_from_directory
 from werkzeug.utils import secure_filename
 url = 'http://52.168.73.191:5000/'
-UPLOAD_FOLDER = 'img'
-CUTBG_FOLDER =  'bgimg'
+UPLOAD_FOLDER = './img/'
+CUTBG_FOLDER =  './bgimg/'
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 
 app = Flask(__name__)
