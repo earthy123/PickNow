@@ -72,10 +72,9 @@ def base6():
             
         files = {'file_base64': open(IMG64_FOLDER+filename, 'rb')}
         r = requests.post(url, files=files)
-        return jsonify(r.json())
+    return jsonify(r.json())
         
-    return 'OK'
-
+#    return 'OK'
 @app.route('/upload/<filename>')
 def receive_image(filename):
     original_img=filename
