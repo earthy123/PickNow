@@ -7,15 +7,16 @@ Created on Mon Jan 15 16:37:20 2018
 """
 import requests
 import os
-from flask import Flask, request, redirect, url_for, render_template, send_from_directory
+from flask import Flask, request, redirect, url_for, render_template, send_from_directory, jsonify
 from werkzeug.utils import secure_filename
 import time
-import sys
+#import sys
 import base64
 url = 'http://52.168.73.191:5000/'
 UPLOAD_FOLDER = './img/'
 CUTBG_FOLDER =  './bgimg/'
 IMG64_FOLDER =  './img64/'
+
 
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 
@@ -33,9 +34,9 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-def api(filename,filetype):
+def api(filename):
     try:
-        files = {filetype: open(UPLOAD_FOLDER+filename, 'rb')}
+        files = {'file': open(UPLOAD_FOLDER+filename, 'rb')}
         requests.post(url, files=files)
     except:
         pass
@@ -47,7 +48,7 @@ def upload_file():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            api(filename,'file')
+            api(filename)
     elif request.method == 'POST' and  'file_bg' in request.files:
         file = request.files['file_bg']
         if file and allowed_file(file.filename):
@@ -60,7 +61,7 @@ def upload_file():
 def base6():
     if request.method == "POST":
         request_json = request.get_json()
-        fileExt = request_json['number']
+        fileExt = request_json['type']
         imgbase64 = request_json['value']
         imgbase64= str.encode(imgbase64)
         timestr = time.strftime("%Y%m%d-%H%M%S")
@@ -68,7 +69,10 @@ def base6():
         filename =timestr+'_base64'+'.'+fileExt
         with open(IMG64_FOLDER+filename, "wb") as fh:
             fh.write(base64.decodebytes(imgbase64))
-#        api(filename,'file_base64')
+            
+        files = {'file_base64': open(IMG64_FOLDER+filename, 'rb')}
+        r = requests.post(url, files=files)
+        return jsonify(r.json())
         
     return 'OK'
 
