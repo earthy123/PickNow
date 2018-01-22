@@ -12,6 +12,7 @@ from werkzeug.utils import secure_filename
 import time
 #import sys
 import base64
+import json
 url = 'http://52.168.73.191:5000/'
 UPLOAD_FOLDER = './img/'
 CUTBG_FOLDER =  './bgimg/'
@@ -72,6 +73,8 @@ def base6():
             
         files = {'file_base64': open(IMG64_FOLDER+filename, 'rb')}
         r = requests.post(url, files=files)
+        with open('data.txt', 'w') as outfile:
+            json.dump(r.json(), outfile)
     return jsonify(r.json())
         
 #    return 'OK'
