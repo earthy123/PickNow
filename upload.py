@@ -7,12 +7,13 @@ Created on Mon Jan 15 16:37:20 2018
 """
 import requests
 import os
-from flask import Flask, request, redirect, url_for, render_template, send_from_directory, jsonify
+from flask import Flask, request, redirect, url_for, render_template, send_from_directory,json,Response ,jsonify
 from werkzeug.utils import secure_filename
 import time
-#import sys
+import sys
 import base64
 import json
+import os
 url = 'http://52.168.73.191:5000/'
 UPLOAD_FOLDER = './img/'
 CUTBG_FOLDER =  './bgimg/'
@@ -66,16 +67,18 @@ def base6():
         imgbase64 = request_json['value']
         imgbase64= str.encode(imgbase64)
         timestr = time.strftime("%Y%m%d-%H%M%S")
-#        print(imgbase64, file=sys.stderr)
         filename =timestr+'_base64'+'.'+fileExt
         with open(IMG64_FOLDER+filename, "wb") as fh:
-            fh.write(base64.decodebytes(imgbase64))
-            
+            fh.write(base64.decodebytes(imgbase64))            
         files = {'file_base64': open(IMG64_FOLDER+filename, 'rb')}
+        print("post r", file=sys.stderr)            
         r = requests.post(url, files=files)
-        with open('data.txt', 'w') as outfile:
-            json.dump(r.json(), outfile)
-    return jsonify(r.json())
+        print(r.text, file=sys.stderr)
+    return r.text
+
+
+
+#        return r.status_code
         
 #    return 'OK'
 @app.route('/upload/<filename>')
